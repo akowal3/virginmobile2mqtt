@@ -15,5 +15,5 @@ jobs:
           username: akowal3
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: akowal3/virginmobile2mqtt
+          repository: akowal3/virginmobile2mqtt/latest
           tag_with_sha: true
