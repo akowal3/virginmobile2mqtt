@@ -1,36 +1,19 @@
-name: ci
-
+name: Publish to Docker
 on:
   push:
     branches:
-      - "master"
-
+      - master
 jobs:
-  docker:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v3
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      -
-        name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+      - uses: actions/checkout@v2
+      # Add your test steps here if needed...
+      - name: Build container
+        uses: docker/build-push-action@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: akowal3
           password: ${{ secrets.GITHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ghcr.io/akowal3/virginmobile2mqtt:latest
+          registry: docker.pkg.github.com
+          repository: akowal3/virginmobile2mqtt
+          tag_with_sha: true
